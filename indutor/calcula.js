@@ -1,9 +1,10 @@
 /**
-* JS - Aula5: Calculadora FLEX
-* @author Professor José de Assis
+* Cálculo do número de espiras de uma bobina com núcleo de ar em função do diâmetro, 
+* indutância e diâmetro do condutor.
+* @author Eng. Fabrício de Lima Ribeiro
+  @data: 09/04/2019
 */
 
-//alert("teste");
 var L, D, Dcon; //tipo string
 
 function calcular(){
