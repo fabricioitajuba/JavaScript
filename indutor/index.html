@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8">
+		<title>Cálculo do indutor</title>
+	</head>
+	
+	<body>
+		<h1>Cálculo do indutor</h1>
+		<img src="neutro.png" alt="Entre com os seguintes dados:" id="status">
+		<form name="frmIndutor">
+			<input type="text" placeholder="Indutancia" size="8" name="txtIndutancia">[uH]</br>
+			<input type="text" placeholder="Diametro" size="8" name="txtDiametro">[cm]</br>
+			<input type="text" placeholder="Diametro do condutor" size="15" name="txtDiametroCondutor">[cm]</br>
+			<input type="button" value="Calcula" onclick="calcular()">
+			<input type="reset" value="Limpar" onclick="resetar()">
+			<script src="calcula.js"></script>
+		</form>
+	</body>
+</html>
