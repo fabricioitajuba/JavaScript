@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Cálculo do número de espiras</title>
+  </head>
+  
+  <body>
+    <h2>Cálculo do número de espiras de um indutor com núcleo de ar</h2>
+    <img src="indutor.jpg" id="status">
+    <form name="frmIndutor">
+      <h3>Entre com os seguintes dados:</h3>
+      Indutancia: <input type="text" size="8" name="txtIndutancia">[uH]</br>
+      Diametro: <input type="text" size="8" name="txtDiametro">[mm]</br>
+      Diametro do condutor: <input type="text" size="15" name="txtDiametroCondutor">[mm]</br></br>
+      <input type="button" value="Calcula" onclick="apresentarDado()"></br></br>
+	 
+	<p id="n_espiras"></p>
+	<p id="l"></p>
+	<p id="p"></p>
+
+    <script>
+	apresentarDado = function(){
+	
+		var L, D, Dcon; //tipo string
+	
+		L=parseFloat(frmIndutor.txtIndutancia.value.replace(",",".")); //troca ","" por ".
+		D=parseFloat(frmIndutor.txtDiametro.value.replace(",","."));
+		Dcon=parseFloat(frmIndutor.txtDiametroCondutor.value.replace(",","."));
+
+		D=D/10;
+		Dcon=Dcon/10;
+
+		n=Math.ceil((100*Dcon*L+Math.sqrt(Math.pow(10,4)*Math.pow(Dcon,2)*Math.pow(L,2)+180*Math.pow(D,3)*L))/(2*Math.pow(D,2)));
+		l=Dcon*n;
+		p=D/l;
+	
+		document.getElementById("n_espiras").innerHTML = "- Número de espiras = "+ n +" Espiras";
+		document.getElementById("l").innerHTML = "- Comprimento da bobina = "+ (l*10).toFixed(2) +" [mm]";
+		document.getElementById("p").innerHTML = "- Precissão = "+ p.toFixed(2) +" - Tem que ser < 3";
+	}      	
+    </script>
+
+    </form>
+  </body>
+</html>
