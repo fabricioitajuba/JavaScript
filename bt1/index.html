@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Amplificador classe AB push-pull para RF</title>
+  </head>
+  
+  <body>
+    <h2>Cálculo do Amplificador classe AB push-pull para RF</h2>
+    <img src="indutor.jpg" id="status">
+    <form name="frmAmplificador">
+      <h3>Entre com os seguintes dados:</h3>
+      Tensao de alimentaçao: <input type="text" size="8" name="txtTensao">[V]</br>
+      Potencia de saida: <input type="text" size="8" name="txtPotencia">[W]</br>
+      Impedancia de saida: <input type="text" size="15" name="txtImpedancia">[ohms]</br>
+      Frequencia minima: <input type="text" size="15" name="txtFmin">[kHz]</br>
+      le do nucleo sugerido: <input type="text" size="15" name="txtle">[cm]</br>
+      Ae do nucleo sugerido: <input type="text" size="15" name="txtAe">[cm^2]</br>      
+      Ve do nucleo sugerido: <input type="text" size="15" name="txtVe">[cm^3]</br>
+      ur do nucleo sugerido: <input type="text" size="15" name="txtur"></br></br>
+      <input type="button" value="Calcula" onclick="apresentarDado()"></br></br>
+	 
+	<p id="Rl"></p>
+	<p id="npri"></p>
+	<p id="Lsec"></p>
+	<p id="nsec"></p>
+	<p id="Vmaxsec"></p>
+	<p id="Bmax"></p>
+	<p id="Aele"></p>
+
+    <script>
+	apresentarDado = function(){
+	
+		var L, D, Dcon; //tipo string
+	
+		Vdd=parseFloat(frmAmplificador.txtTensao.value.replace(",",".")); //troca ","" por ".
+		Po=parseFloat(frmAmplificador.txtPotencia.value.replace(",","."));
+		Rout=parseFloat(frmAmplificador.txtImpedancia.value.replace(",","."));
+		Fmin=parseFloat(frmAmplificador.txtFmin.value.replace(",","."));
+		le=parseFloat(frmAmplificador.txtle.value.replace(",","."));
+		Ae=parseFloat(frmAmplificador.txtAe.value.replace(",","."));
+		Ve=parseFloat(frmAmplificador.txtVe.value.replace(",","."));
+		ur=parseFloat(frmAmplificador.txtur.value.replace(",","."));
+
+		Fmin=Fmin*Math.pow(10,3);
+		le=le/100;
+		Ae=Ae/10000;
+		Ve=Ve/1000000;
+		uo=4*Math.PI*Math.pow(10,-7);
+
+		Rl=Math.pow(0.85*Vdd,2)/Po;
+		Zpri=2*Rl;
+		Zsec=4*Rout;
+		Lsec=Zsec/(2*Math.PI*Fmin);
+		nsec=Math.sqrt((Lsec*le)/(uo*ur*Ae));
+		npri=nsec/Math.sqrt(Rout/Zpri);
+		Vmaxsec=Math.sqrt(2*Po*Rout);
+		Bmax=Vmaxsec/(2*Math.PI*Fmin*Ae*nsec);
+		Aele=(Math.pow((Vmaxsec/(2*Math.PI*Fmin*Bmax)),2)*uo*ur)/Lsec;
+
+	
+		Lsec=Lsec*Math.pow(10,6);
+		Bmax=Bmax*Math.pow(10,3);
+		Aele=Aele*1000000;
+		document.getElementById("Rl").innerHTML = "- Impedancia de cada transistor = "+ Rl.toFixed(2) +" ohms";
+		document.getElementById("npri").innerHTML = "- Numero de espiras do primario = " + npri.toFixed(2) + " Espiras " + "(" + npri.toFixed(2)/2 + "+" + npri.toFixed(2)/2 + ")";
+		document.getElementById("Lsec").innerHTML = "- Indutancia do secundario = "+ Lsec.toFixed(2) +" uH";
+		document.getElementById("nsec").innerHTML = "- Numero de espiras do secundario = "+ nsec.toFixed(2) +" Espiras";
+		document.getElementById("Vmaxsec").innerHTML = "- Tensao maxima de saida = "+ Vmaxsec.toFixed(2) +" V";
+		document.getElementById("Bmax").innerHTML = "- Fluxo maximo = "+ Bmax.toFixed(2) +" mT";
+		document.getElementById("Aele").innerHTML = "- Aele calculado = "+ Aele.toFixed(2) +" [cm^3]";
+		//document.getElementById("n_espiras").innerHTML = "- Número de espiras = "+ n +" Espiras";
+		//document.getElementById("l").innerHTML = "- Comprimento da bobina = "+ (l*10).toFixed(2) +" [mm]";
+		//document.getElementById("p").innerHTML = "- Precissão = "+ p.toFixed(2) +" - Tem que ser < 3";
+	}      	
+    </script>
+
+    </form>
+  </body>
+</html>
